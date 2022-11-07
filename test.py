@@ -110,7 +110,7 @@ def server_local_cards_sync():
 
 def run_gui_app():
     try:
-       subprocess.call("py app.py",shell=True) 
+       subprocess.call("python3 app.py",shell=True) 
     except Exception as e:
         print(e)
         
