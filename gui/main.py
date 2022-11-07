@@ -362,4 +362,4 @@ if __name__ == '__main__':
         app.exec()
     except:
         print("Exiting ")
-        subprocess.call('sudo python3 gui/main.py', shell=True)
+        subprocess.call('sudo python3 test.py', shell=True)
