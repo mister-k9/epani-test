@@ -1,6 +1,6 @@
 import sys
 import time
-import serial
+import serial, subprocess
 from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot, Qt
 from PyQt5.QtGui import QKeySequence, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, \
@@ -362,3 +362,4 @@ if __name__ == '__main__':
         app.exec()
     except:
         print("Exiting ")
+        subprocess.call('sudo python3 gui/main.py', shell=True)
