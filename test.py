@@ -88,22 +88,22 @@ def server_local_orders_sync():
 
 
 def server_local_cards_sync():
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~ Server - Local Cards Sync Initiated ~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('~~~~~~~~~~~ Server - Local Cards Sync Initiated ~~~~~~~~~~~')
     if check_internet_connection(20):
         if check_server_connection(20):
             print("Syncing cards (posting all the cards to server)")
             print(
-                "~~~~~~~~~~~~~~~~~~~~~~~~~ Server - Local Cards Sync Successful ~~~~~~~~~~~~~~~~~~~~~~~~~")
+                "~~~~~~~~~~~ Server - Local Cards Sync Successful ~~~~~~~~~~~")
             check_serial_hardware()
 
         else:
             print(
-                "~~~~~~~~~~~~~~~~~~~~~~~ Server - Local Cards Sync Failed ~~~~~~~~~~~~~~~~~~~~~~~~")
+                "~~~~~~~~~~~ Server - Local Cards Sync Failed ~~~~~~~~~~~")
             print("Since Time Limit Exceeded")
             check_serial_hardware()
             return
     else:
-        print("~~~~~~~~~~~~~~~~~~~~~~~ Server - Local Cards Sync Failed ~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~ Server - Local Cards Sync Failed ~~~~~~~~~~~")
         print("Since Time Limit Exceeded")
         check_serial_hardware()
         return
@@ -117,7 +117,7 @@ def run_gui_app():
         
 
 def check_serial_hardware():
-    print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~ Checking Serial Hardware Connection ~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("\n~~~~~~~~~~~ Checking Serial Hardware Connection ~~~~~~~~~~~")
     while True:
         try:
             serialport = serial.Serial(
@@ -131,7 +131,7 @@ def check_serial_hardware():
             print("Serial Port Disconnected. Trying again!")
             time.sleep(2)
             pass
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~ Serial Hardware Is Connected ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~ Serial Hardware Is Connected ~~~~~~~~~~~")
     run_gui_app()
 
 
@@ -178,7 +178,7 @@ def setup_db():
             cur.execute("INSERT INTO cards_info (card_number,machine_id,holder_name,balance,last_txn_volume,last_txn_status,last_txn_timestamp) VALUES (?,?,?,?,?,?,?)", [
                         card['card_number'], card['machine_id'], card['holder_name'], card['balance'], card['last_txn_volume'], card['last_txn_status'], card['last_txn_timestamp']])
             conn.commit()
-        print("--------------- Successfully Copied Cards To Local DB -----------------")
+        print("---------- Successfully Copied Cards To Local DB ----------")
         check_serial_hardware()
 
     else:
