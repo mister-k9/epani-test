@@ -41,8 +41,9 @@ class Worker(QObject):
                 line = serialport.readline().decode('utf-8').rstrip()
             except Exception as e:
                 print(e)
+                serialport.close()
                 subprocess.call('sudo python3 test.py', shell=True)
-                sys.exit()
+                QApplication.instance().quit
             # print(line)
 
             self.intReady.emit(line)
