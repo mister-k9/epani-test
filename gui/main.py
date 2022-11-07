@@ -20,6 +20,7 @@ try:
     )
 except serial.SerialException as e:
     print(e)
+    subprocess.call('sudo python3 test.py', shell=True)
 
 
 class Worker(QObject):
@@ -362,4 +363,4 @@ if __name__ == '__main__':
         app.exec()
     except:
         print("Exiting ")
-        subprocess.call('sudo python3 test.py', shell=True)
+        
