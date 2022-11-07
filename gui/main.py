@@ -18,9 +18,9 @@ try:
         baudrate=115200,
         timeout=0.3
     )
-except serial.SerialException as e:
+except Exception as e:
     print(e)
-    subprocess.call('sudo python3 test.py', shell=True)
+    
 
 
 class Worker(QObject):
@@ -37,7 +37,11 @@ class Worker(QObject):
         serialport.flushInput()
         serialport.flushOutput()
         while self.working:
-            line = serialport.readline().decode('utf-8').rstrip()
+            try:
+                line = serialport.readline().decode('utf-8').rstrip()
+            except Exception as e:
+                print(e)
+                subprocess.call('sudo python3 test.py', shell=True)
             # print(line)
 
             self.intReady.emit(line)
