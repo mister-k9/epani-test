@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         ad_layout.addWidget(self.videoframe)
         self.stackAdVideo.setLayout(ad_layout)
 
-        file_name = "media/zomato-ad.avi"
+        file_name = "gui/media/zomato-ad.avi"
         if file_name != '':
             media = self.instance.media_new(file_name)
             self.mediaplayer.set_media(media)
@@ -202,7 +202,7 @@ class MainWindow(QMainWindow):
         #self.setLayout(main
 
     def ad_image_setup(self):
-        ad_img_path = "media/add.jpg"
+        ad_img_path = "gui/media/add.jpg"
         if ad_img_path:
             ad_img = QPixmap(ad_img_path)
             self.adImg.setPixmap(ad_img)
