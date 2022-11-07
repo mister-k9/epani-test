@@ -38,7 +38,7 @@ def check_server_connection(duration=None):
         start = time.time()
         while True:
             try:
-                requests.get('http://127.0.0.1:8000/')
+                requests.get('https://epani-django.herokuapp.com/')
                 return True
             except:
                 print("Server Down! Trying Again ... ")
@@ -50,7 +50,7 @@ def check_server_connection(duration=None):
     else:
         while True:
             try:
-                requests.get('http://127.0.0.1:8000/')
+                requests.get('https://epani-django.herokuapp.com/')
                 break
             except:
                 print("Server Down! Trying Again ... ")
@@ -121,7 +121,7 @@ def check_serial_hardware():
     while True:
         try:
             serialport = serial.Serial(
-                port='COM13',
+                port='/dev/ttyACM0',
                 baudrate=115200,
                 timeout=0.3
             )
@@ -147,7 +147,8 @@ def setup_db():
         check_server_connection()
         mid, mtoken = get_or_set_machine_credentials()
         # HARD CODE ENDPOINTS INTO CODE
-        cards_endpoint = "http://127.0.0.1:8000/api/get_cards/"
+        
+        cards_endpoint = "https://epani-django.herokuapp.com/api/get_cards/"
         params = {
             'mid': mid,
             'mtoken': mtoken,
