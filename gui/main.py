@@ -39,15 +39,12 @@ class Worker(QObject):
         while self.working:
             try:
                 line = serialport.readline().decode('utf-8').rstrip()
+                self.intReady.emit(line)
             except Exception as e:
                 print(e)
                 serialport.close()
                 subprocess.call('sudo python3 test.py', shell=True)
                 sys.exit()
-                
-            # print(line)
-
-            self.intReady.emit(line)
 
         self.finished.emit()
         print('Worker Finished')
