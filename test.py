@@ -128,6 +128,7 @@ def check_serial_hardware():
             serialport.close()
             break
         except serial.SerialException as e:
+            print(e)
             print("Serial Port Disconnected. Trying again!")
             time.sleep(2)
             pass

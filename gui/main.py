@@ -42,6 +42,7 @@ class Worker(QObject):
                 self.intReady.emit(line)
             except Exception as e:
                 print(e)
+                self.working = False
                 serialport.close()
                 subprocess.call('sudo python3 test.py', shell=True)
                 sys.exit()
