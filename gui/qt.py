@@ -365,7 +365,7 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     try:
-        app.exec()
+        app.exec_()
     except Exception as e:
         print(e)
         print("Exiting ")

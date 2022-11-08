@@ -10,7 +10,7 @@ file = "epani.db"
 def check_internet_connection(duration=None):
     if duration:
         start = time.time()
-        while True:
+        while True: 
             try:
                 requests.get('https://www.google.com/')
                 return True
@@ -130,7 +130,7 @@ def check_serial_hardware():
         except serial.SerialException as e:
             print(e)
             print("Serial Port Disconnected. Trying again!")
-            time.sleep(2)
+            time.sleep(3)
             pass
     print("~~~~~~~~~~~ Serial Hardware Is Connected ~~~~~~~~~~~")
     run_gui_app()
