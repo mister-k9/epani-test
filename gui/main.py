@@ -123,7 +123,7 @@ class MainWindow(QMainWindow):
         ad_layout.addWidget(self.videoframe)
         self.stackAdVideo.setLayout(ad_layout)
 
-        file_name = "gui/media/zomato-ad.avi"
+        file_name = "gui/media/winter-ad.mp4"
         if file_name != '':
             media = self.instance.media_new(file_name)
             self.mediaplayer.set_media(media)
