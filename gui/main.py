@@ -220,7 +220,7 @@ class MainWindow(QMainWindow):
         self.ad_video_start()
 
     def ad_video_start(self):
-        # self.mediaplayer.set_fullscreen(True)
+        self.mediaplayer.set_fullscreen(True)
         # self.mediaplayer.audio_set_mute(True)
         self.mediaplayer.play()
         serial_write("advideo")
