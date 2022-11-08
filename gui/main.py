@@ -45,7 +45,7 @@ class Worker(QObject):
                 self.working = False
                 serialport.close()
                 subprocess.call('sudo python3 test.py', shell=True)
-                sys.exit()
+                quit()
 
         self.finished.emit()
         print('Worker Finished')
