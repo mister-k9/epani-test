@@ -73,7 +73,6 @@ class Order():
                 return "insufficienct_balance"
 
         else:
-            conn.close()
             return self.internet_available_func()
            
             
@@ -107,6 +106,7 @@ class Order():
             conn = sqlite3.connect("/home/epani/Desktop/epani-test/epani.db")
             cur = conn.cursor()
             creds = (cur.execute('SELECT * FROM mac_info')).fetchone()
+            conn.close()
             mid, mtoken = creds[1], creds[2]
 
             deduct_card_balance_endpoint = "https://epani-django.herokuapp.com/api/deduct_card_balance/"
