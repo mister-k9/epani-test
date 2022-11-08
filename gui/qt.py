@@ -45,9 +45,7 @@ class Worker(QObject):
                 self.working = False
                 serialport.close()
                 window.close()
-                subprocess.call('sudo python3 test.py', shell=True)
-                
-                
+                subprocess.call('sudo python3 main.py', shell=True)
 
         self.finished.emit()
         print('Worker Finished')
@@ -274,8 +272,8 @@ class MainWindow(QMainWindow):
                     time.sleep(2)  # Necessary delay for serial here
                     serial_write("tapp")
                     toggle_content_screen(self.contentL, "tapSelection")
-                elif payment_status == "payment_failed":
-                    toggle_content_screen(self.contentL, "paymentFailed")
+                for i in range(5):
+                    print(payment_status)
             return
 
 
