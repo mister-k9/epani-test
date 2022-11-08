@@ -46,6 +46,7 @@ class Worker(QObject):
                 serialport.close()
                 subprocess.call('sudo python3 test.py', shell=True)
                 quit()
+                
 
         self.finished.emit()
         print('Worker Finished')
@@ -366,6 +367,7 @@ if __name__ == '__main__':
     window.show()
     try:
         app.exec()
-    except:
+    except Exception as e:
+        print(e)
         print("Exiting ")
         
