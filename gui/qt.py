@@ -39,8 +39,15 @@ class Worker(QObject):
 
     def work(self):
         print("Worker Started")
-        serialport.flushInput()
-        serialport.flushOutput()
+        try:
+            serialport.flushInput()
+            serialport.flushOutput()
+        except Exception as e:
+                print(e)
+                self.working = False
+                serialport.close()
+                window.close()
+                subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
         while self.working:
             try:
                 line = serialport.readline().decode('utf-8').rstrip()
@@ -57,8 +64,14 @@ class Worker(QObject):
 
 
 def serial_write(text):
-    serialport.write(text.encode('utf-8'))
-    print(text)
+    try:
+        serialport.write(text.encode('utf-8'))
+        print(text)
+    except Exception as e:
+                print(e)
+                serialport.close()
+                window.close()
+                subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
 
 
 class MainWindow(QMainWindow):
