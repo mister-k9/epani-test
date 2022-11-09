@@ -239,6 +239,7 @@ def check_for_updates():
             return
         elif updating_flag in output:
             print('~~~~~~~~~~~~~~~~~~~~~~~ Updates Are Installed ~~~~~~~~~~~~~~~~~~~~~~~~')
+            
             return
     except:
         print("Checking updates failed!")

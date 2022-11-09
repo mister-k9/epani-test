@@ -14,7 +14,7 @@ from vlc import callbackmethod
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-dotenv_path = Path('K:\\DEV\\epani-310\\desktop\\app\\.env')
+dotenv_path = Path('/home/pi/Documents/epani-test/.env')
 load_dotenv(dotenv_path=dotenv_path)
 
 try:
