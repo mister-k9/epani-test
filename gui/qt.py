@@ -45,7 +45,6 @@ class Worker(QObject):
         except Exception as e:
                 print(e)
                 self.working = False
-                serialport.close()
                 window.close()
                 subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
         while self.working:
