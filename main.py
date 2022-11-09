@@ -231,6 +231,7 @@ def check_for_updates():
     os.chdir(os.getenv('OS_CHDIR'))
 
     try:
+        subprocess.call('git stash',shell=True)
         output = (subprocess.check_output("git pull",shell=True)).decode('utf-8')
         
         if latest_flag in output:
