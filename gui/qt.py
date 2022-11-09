@@ -11,10 +11,15 @@ from classes.ui import create_footer_section, toggle_content_screen
 
 import vlc
 from vlc import callbackmethod
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+dotenv_path = Path('K:\\DEV\\epani-310\\desktop\\app\\.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 try:
     serialport = serial.Serial(
-        port='/dev/ttyACM0',
+        port=os.getenv('SERIAL_PORT'),
         baudrate=115200,
         timeout=0.3
     )
@@ -45,7 +50,7 @@ class Worker(QObject):
                 self.working = False
                 serialport.close()
                 window.close()
-                subprocess.call('sudo python3 main.py', shell=True)
+                subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
 
         self.finished.emit()
         print('Worker Finished')
@@ -122,7 +127,7 @@ class MainWindow(QMainWindow):
         ad_layout.addWidget(self.videoframe)
         self.stackAdVideo.setLayout(ad_layout)
 
-        file_name = "gui/media/winter-ad.mp4"
+        file_name = os.getenv('AD_VIDEO_PATH')
         if file_name != '':
             media = self.instance.media_new(file_name)
             self.mediaplayer.set_media(media)
@@ -208,7 +213,7 @@ class MainWindow(QMainWindow):
         #self.setLayout(main
 
     def ad_image_setup(self):
-        ad_img_path = "gui/media/add.jpg"
+        ad_img_path = os.getenv('AD_IMAGE_PATH')
         if ad_img_path:
             ad_img = QPixmap(ad_img_path)
             self.adImg.setPixmap(ad_img)
