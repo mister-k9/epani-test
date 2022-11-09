@@ -305,8 +305,8 @@ class MainWindow(QMainWindow):
             # TODO : NAVIGATING TO AD SCREEN WHEN 'C' IS PRESSED WHILE DISPENSING
 
     def on_serial_worker_listen(self, data):
-        if not 'z' in data:
-            print(data)
+        # if not 'z' in data:
+        #     print(data)
 
         if data == "":
             # TODO : See if this can be removed
