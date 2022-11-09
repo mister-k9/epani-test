@@ -39,14 +39,8 @@ class Worker(QObject):
 
     def work(self):
         print("Worker Started")
-        try:
-            serialport.flushInput()
-            serialport.flushOutput()
-        except Exception as e:
-                print(e)
-                self.working = False
-                window.close()
-                subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
+        serialport.flushInput()
+        serialport.flushOutput()
         while self.working:
             try:
                 line = serialport.readline().decode('utf-8').rstrip()
@@ -63,14 +57,8 @@ class Worker(QObject):
 
 
 def serial_write(text):
-    try:
-        serialport.write(text.encode('utf-8'))
-        print(text)
-    except Exception as e:
-                print(e)
-                serialport.close()
-                window.close()
-                subprocess.call(os.getenv('RUN_MAIN_COMMAND'), shell=True)
+    serialport.write(text.encode('utf-8'))
+    print(text)
 
 
 class MainWindow(QMainWindow):
@@ -317,8 +305,7 @@ class MainWindow(QMainWindow):
             # TODO : NAVIGATING TO AD SCREEN WHEN 'C' IS PRESSED WHILE DISPENSING
 
     def on_serial_worker_listen(self, data):
-        # if not 'z' in data:
-        #     print(data)
+        
 
         if data == "":
             # TODO : See if this can be removed
