@@ -3,6 +3,11 @@ from datetime import datetime
 import requests
 from random import randint
 
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+dotenv_path = Path('K:\\DEV\\epani-310\\desktop\\app\\.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 class Order():
     def __init__(self):
@@ -44,7 +49,7 @@ class Order():
     def process_payment(self):
         if not self.internet_available:
 
-            conn = sqlite3.connect("/home/epani/Desktop/epani-test/epani.db")
+            conn = sqlite3.connect()
 
             cur = conn.cursor()
             query = 'SELECT name,balance FROM cards_info WHERE card_number =\'' + self.cardNo + "\'"
@@ -103,13 +108,13 @@ class Order():
             # if auth_resp.status_code == 200:
             #     token = auth_resp.json()['token']
 
-            conn = sqlite3.connect("/home/epani/Desktop/epani-test/epani.db")
+            conn = sqlite3.connect(os.getenv('LOCAL_DB'))
             cur = conn.cursor()
             creds = (cur.execute('SELECT * FROM mac_info')).fetchone()
             conn.close()
             mid, mtoken = creds[1], creds[2]
 
-            deduct_card_balance_endpoint = "https://epani-django.herokuapp.com/api/deduct_card_balance/"
+            deduct_card_balance_endpoint = os.getenv('DEDUCT_CARD_BALANCE_ENDPOINT')
             nw = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             params = {
                 'mid': mid,
@@ -148,7 +153,7 @@ class Order():
                 'volume_in_ml': f'{self.volume}',
                 'local_timestamp': f'{nw}',
             }
-            post_order_endpoint = "https://epani-django.herokuapp.com/api/create_order/"
+            post_order_endpoint = os.getenv('CREATE_ORDER_ENDPOINT')
             post_order = requests.post(post_order_endpoint, json=data, params=params)
             res = post_order.json()
             if res == 'Successful!':
