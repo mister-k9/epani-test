@@ -9,6 +9,7 @@ from pathlib import Path
 dotenv_path = Path('/home/pi/Documents/epani-test/.env')
 load_dotenv(dotenv_path=dotenv_path)
 
+
 class Order():
     def __init__(self):
         self.volume = ''
@@ -79,8 +80,6 @@ class Order():
 
         else:
             return self.internet_available_func()
-           
-            
 
     def is_volume_set(self):
         return self.volume != '' and self.amount != 0
@@ -116,14 +115,15 @@ class Order():
 
             deduct_card_balance_endpoint = os.getenv('DEDUCT_CARD_BALANCE_ENDPOINT')
             nw = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            params = {
+            data = {
                 'mid': mid,
                 'mtoken': mtoken,
+                'volume_in_ml': f'{self.volume}',
                 'cno': self.cardNo,
                 'am': self.amount,
                 'txn_ts': nw,
             }
-            res = (requests.get(deduct_card_balance_endpoint,params=params)).json()
+            res = (requests.get(deduct_card_balance_endpoint,json=data)).json()
             if not type(res) == dict:
                 if res == 'Invalid Machine':
                     return 'invalid_machine'
@@ -135,34 +135,39 @@ class Order():
             print(res)
             self.available_balance = res['balance']
             self.holder_name = res['name']
+            order_created = res['order_created']
 
-            if self.available_balance < self.amount:
+            if not order_created:
                 return 'insufficienct_balance'
-        
-            # order_id = last order id  + 1
-            
 
-            params = {
-                'mid': mid,
-                'mtoken': mtoken
-            }
-            data = {
-                'card_number': f'{self.cardNo}',
-                'order_status': 'DONE_PAYMENT',
-                'amount': f'{self.amount}',
-                'volume_in_ml': f'{self.volume}',
-                'local_timestamp': f'{nw}',
-            }
-            post_order_endpoint = os.getenv('CREATE_ORDER_ENDPOINT')
-            post_order = requests.post(post_order_endpoint, json=data, params=params)
-            res = post_order.json()
-            if res == 'Successful!':
-                return 'payment_done'
-            elif res == 'Invalid Request!':
-                return 'invalid_token'
-            elif res == 'Invalid Machine':
-                return 'invalid_machine'
+            return 'payment_done'
+
             
-            
+                
+
+            # order_id = last order id  + 1
+
+            # params = {
+            #     'mid': mid,
+            #     'mtoken': mtoken
+            # }
+            # data = {
+            #     'card_number': f'{self.cardNo}',
+            #     'order_status': 'DONE_PAYMENT',
+            #     'amount': f'{self.amount}',
+            #     'volume_in_ml': f'{self.volume}',
+            #     'local_timestamp': f'{nw}',
+            # }
+            # post_order_endpoint = os.getenv('CREATE_ORDER_ENDPOINT')
+            # post_order = requests.post(
+            #     post_order_endpoint, json=data, params=params)
+            # res = post_order.json()
+            # if res == 'Successful!':
+            #     return 'payment_done'
+            # elif res == 'Invalid Request!':
+            #     return 'invalid_token'
+            # elif res == 'Invalid Machine':
+            #     return 'invalid_machine'
+
         except Exception as e:
             print(e)
