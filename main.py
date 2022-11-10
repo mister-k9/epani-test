@@ -245,7 +245,7 @@ def check_for_updates():
         print("Checking updates failed!")
         
 def main():
-    check_for_updates()
+    #check_for_updates()
     setup_db()
 
 if __name__ == "__main__":
